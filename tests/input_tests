@@ -1,8 +1,0 @@
-<infile cat>"outfile">"outfile2"<'../minishell/infile2
-<infile cat>"outfile">"outfile2"<'../minishell/infile2'
-<infile cat>"outfile">"outfile2"<"../minishell/infile2"
-<infile cat>"outfile">"outfile2"<'infile2'
-<infile cat>outfile>outfile2<infile2
-exit > outfile
-exit | cat > outfile
-exit | ls > outfile
