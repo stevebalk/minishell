@@ -6,7 +6,7 @@
 /*   By: jopeters <jopeters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:16:37 by jopeters          #+#    #+#             */
-/*   Updated: 2023/11/10 11:17:04 by jopeters         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:20:01 by jopeters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,4 @@ char *prompt(char *in)
     printf("|%s|\n", in);
 
     return in;  
-}
+}	
