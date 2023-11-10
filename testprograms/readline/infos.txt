@@ -1,5 +1,0 @@
-https://tiswww.case.edu/php/chet/readline/INSTALL
-
-https://web.mit.edu/gnu/doc/html/rlman_2.html
-
-https://progidea.com/post/how-to-use-the-readline-library-in-linux-c-programming/
