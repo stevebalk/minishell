@@ -6,7 +6,7 @@
 /*   By: jopeters <jopeters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:48:54 by jopeters          #+#    #+#             */
-/*   Updated: 2023/11/10 10:39:48 by jopeters         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:58:31 by jopeters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,42 @@ void	c_cyan(void)
 	printf("\033[0;36m");
 }
 
+void    clear_screen(void)
+{
+    printf("\e[1;1H\e[2J");
+}
+
 void	c_reset(void)
 {
 	printf("\033[0m");
 }
 
+char *prompt(char *in)
+{
+    c_red();printf("minihell");
+    c_yellow();printf(">>");
+        
+    c_cyan();
+    in = readline("");
+        
+    c_green();
+    printf("|%s|\n", in);
+
+    return in;  
+}
 
 int main(void)
 {
-    char *input;
-    printf("\e[1;1H\e[2J");
+    char *prompt_in;
+
+    clear_screen();
+
     while(1)
     {
-        c_red();printf("minihell");
-        c_yellow();printf(">>");
-        
-        c_cyan();
-        input = readline("");
-        
-        c_green();
-        printf("|%s|\n", input);
+        prompt_in = prompt(prompt_in);
+        free(prompt_in);
     }
     
-    free(input);
     return 0;
 }
 
