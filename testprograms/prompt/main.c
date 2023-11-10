@@ -6,7 +6,7 @@
 /*   By: jopeters <jopeters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:02:59 by jopeters          #+#    #+#             */
-/*   Updated: 2023/11/09 11:24:15 by jopeters         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:12:38 by jopeters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int main() {
         read_command(line);
 		c_cyan(); printf(" LINE |%s|\n", line); c_reset();
     }
-
-	//printf("LINE >%s<\n", line);
 	
     return 0;
 }
