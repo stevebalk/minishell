@@ -1,4 +1,6 @@
+echo '$e"Hello"' $e
 <<$A cat>>outfile|cat>outfile|"$A$A"           			   	  sdklkl"dfskfjkl"
+cd infile"fkd"$A"fdds'$Asdfds"
 <infile grep "Hello World" >          outfile
 <$Ainfile cat>>
 <infile cat>"outfile">"outfile2"<'../minishell/infile2
