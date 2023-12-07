@@ -6,13 +6,53 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 12:30:15 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:35:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define MAX_LINES 1000
+
+void	c_red(void)
+{
+	printf("\033[0;31m");
+}
+
+void	c_green(void)
+{
+	printf("\033[0;32m");
+}
+
+void	c_blue(void)
+{
+	printf("\033[0;34m");
+}
+
+void	c_purple(void)
+{
+	printf("\033[0;35m");
+}
+
+void	c_yellow(void)
+{
+	printf("\033[0;33m");
+}
+
+void	c_cyan(void)
+{
+	printf("\033[0;36m");
+}
+
+void	clear_screen(void)
+{
+	printf("\e[1;1H\e[2J");
+}
+
+void	c_reset(void)
+{
+	printf("\033[0m");
+}
 
 /* TEST FUNCTION DELETE LATER */
 void	read_test_file(char **filename, char *test_lines[100])
@@ -86,8 +126,14 @@ void prettyPrintCmd(t_cmd *cmd) {
 			printf("  Redirections:\n");
 			t_redir *redir = cmd->redirs;
 			while (redir != NULL) {
+				c_blue();
+				printf("    Type:");
 				c_red();
-				printf("    Type: %s, Filename: %s\n", tokenTypeNames[redir->type], redir->target);
+				printf(" %s", tokenTypeNames[redir->type]);
+				c_blue();
+				printf(" Filename: ");
+				c_red();
+				printf("%s\n", redir->target);
 				c_reset();
 				redir = redir->next;
 			}
