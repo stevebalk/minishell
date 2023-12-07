@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 12:35:04 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:40:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,16 @@ const char *tokenTypeNames[] = {
 	"EOF"
 };
 
-void prettyPrintCmd(t_cmd *cmd) {
+void prettyPrintCmd(t_cmd *cmd) 
+{
+	int count = 0;
 	while (cmd != NULL) {
-		c_green(); printf("Command:\n");
+		c_green(); printf("Command");
+		c_red(); printf("  >");
+		c_green(); printf(" %i ", count);
+		
+		c_red(); printf("< \n");
+		
 		if (cmd->argv != NULL) {
 			c_cyan();
 			printf("  Arguments:\n");
@@ -138,7 +145,7 @@ void prettyPrintCmd(t_cmd *cmd) {
 				redir = redir->next;
 			}
 		}
-
+		count++;
 		printf("\n");
 		cmd = cmd->next;
 	}
@@ -170,7 +177,7 @@ int	main(int argc, char **argv)
 	// 	printf("Testfile should be filled with bash commands\n");
 	// 	exit(EXIT_FAILURE);
 	// }
-	char teststring[] = "> dsads << infile | < dsd | fdfs>fdsf | fdsf < fdf fggre >f fd | fdsf" ;
+	char teststring[] = "<infile1.txt <infile2.txt <infile3.txt" ;
 	lex(teststring, &ms);
 	expand(&ms);
 	parse(&ms);
