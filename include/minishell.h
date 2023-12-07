@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:02:49 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 12:59:30 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 13:06:39 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,14 @@ void		free_cmd_list_exept_here_doc(t_cmd **cmd);
 void		free_redir_node(t_redir **node);
 void		free_redir_list(t_redir **list);
 
-
+// del 
+void	c_red(void);
+void	c_green(void);
+void	c_blue(void);
+void	c_purple(void);
+void	c_yellow(void);
+void	c_cyan(void);
+void	clear_screen(void);
+void	c_reset(void);
 
 #endif

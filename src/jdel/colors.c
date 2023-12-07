@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 void	c_red(void)
 {

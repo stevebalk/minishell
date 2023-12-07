@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 13:04:54 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 13:08:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ void prettyPrintCmd(t_cmd *cmd)
 		}
 
 		if (cmd->redirs != NULL) {
-			c_yellow();
+			c_cyan();
 			printf("  Redirections:\n");
 			t_redir *redir = cmd->redirs;
 			while (redir != NULL) {
 				c_blue();
 				printf("    Type:");
-				c_red();
+				c_purple();
 				printf(" %s", tokenTypeNames[redir->type]);
 				c_blue();
 				printf(" Filename: ");
-				c_red();
+				c_purple();
 				printf("%s\n", redir->target);
 				c_reset();
 				redir = redir->next;
@@ -120,28 +120,13 @@ int	main(int argc, char **argv)
 
 	init_ms(&ms);
 	ms.last_exit_code = "127";
-	// if (argc == 2)
-	// {
-	// 	if (access(argv[1], F_OK) == 0)
-	// 		// read_test_file(argv + 1, test_lines);
-	// 		printf("OK\n");
-	// 	else
-	// 	{
-	// 		perror("File doesn't exist");
-	// 		exit(EXIT_FAILURE);
-	// 	}
-	// }
-	// else
-	// {
-	// 	printf("Wrong input. Use: ./lexer <test_file>\n");
-	// 	printf("Testfile should be filled with bash commands\n");
-	// 	exit(EXIT_FAILURE);
-	// }
+
 	char teststring[] = "<infile1.txt <infile2.txt wc -l" ;
 	lex(teststring, &ms);
 	expand(&ms);
 	parse(&ms);
 	prettyPrintCmd(ms.cmd);
+	jexecuter(&ms);
 	ms_error(&ms, NULL, 0, 0);
 	// free(test_lines[0]);
 }
