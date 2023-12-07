@@ -6,16 +6,21 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/06 18:41:41 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:56:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	executer(t_ms *ms)
+
+void	jexecuter(t_ms *ms)
 {
+	c_yellow(); printf("jexecuter() \n");
+	
 	if (!ms->cmd)
 		return ;
+
+	c_yellow(); printf("~jexecuter() \n");
 }
 
 /*

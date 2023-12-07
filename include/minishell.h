@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbalk <sbalk@student.fr>                   +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:02:49 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/05 18:37:37 by sbalk            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:59:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int			unexpected_token(t_ms *ms, char *token_name, int shall_free);
 int			is_builtin_command(char *str);
 void		heredoc(char *delimiter);
 
+void	jexecuter(t_ms *ms);
+
 /* Error handling */
 
 void		check_if_malloc_failed(void *src, t_ms *ms);
@@ -110,5 +112,7 @@ void		free_cmd_list(t_cmd **cmd);
 void		free_cmd_list_exept_here_doc(t_cmd **cmd);
 void		free_redir_node(t_redir **node);
 void		free_redir_list(t_redir **list);
+
+
 
 #endif

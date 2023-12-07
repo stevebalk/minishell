@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 12:40:04 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:57:16 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,6 @@
 
 #define MAX_LINES 1000
 
-void	c_red(void)
-{
-	printf("\033[0;31m");
-}
-
-void	c_green(void)
-{
-	printf("\033[0;32m");
-}
-
-void	c_blue(void)
-{
-	printf("\033[0;34m");
-}
-
-void	c_purple(void)
-{
-	printf("\033[0;35m");
-}
-
-void	c_yellow(void)
-{
-	printf("\033[0;33m");
-}
-
-void	c_cyan(void)
-{
-	printf("\033[0;36m");
-}
-
-void	clear_screen(void)
-{
-	printf("\e[1;1H\e[2J");
-}
-
-void	c_reset(void)
-{
-	printf("\033[0m");
-}
 
 /* TEST FUNCTION DELETE LATER */
 void	read_test_file(char **filename, char *test_lines[100])
@@ -177,7 +138,7 @@ int	main(int argc, char **argv)
 	// 	printf("Testfile should be filled with bash commands\n");
 	// 	exit(EXIT_FAILURE);
 	// }
-	char teststring[] = "<infile1.txt <infile2.txt <infile3.txt" ;
+	char teststring[] = "<infile1.txt <infile2.txt wc -l" ;
 	lex(teststring, &ms);
 	expand(&ms);
 	parse(&ms);
