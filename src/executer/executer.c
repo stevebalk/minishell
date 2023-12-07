@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 13:31:11 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 17:20:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,23 @@ void	check_infile(t_ms *ms, t_redir *redir)
 		c_blue();printf(" Filename: ");c_purple();printf("%s\n", tmp_redir->target);c_reset();
 
 		// Check
-		fd = open(tmp_redir->target, O_RDONLY, 0644);
-		printf("\t  open file >%s< \n", tmp_redir->target);
-		if (fd == -1)
+		if (tmp_redir->type == TOKEN_REDIRECT || tmp_redir->type ==TOKEN_INFILE)
 		{
-			c_red(); printf("\t\tError --> TODO Error Handling Open file in check_infile \n"); c_reset();
-			ms->last_exit_int = 1; 			// richtiger Code?
+			fd = open(tmp_redir->target, O_RDONLY, 0644);
+			printf("\t  open file >%s< \n", tmp_redir->target);
+			if (fd == -1)
+			{
+				c_red(); printf("\t\tError 1 --> TODO Error Handling Open file in check_infile \n"); c_reset();
+				ms->last_exit_code_int = 1; 			// richtiger Code?
+			}
+			else
+			{
+				c_green(); printf("\t\tFD: %i   --> TODO Error Handling Open file in check_infile \n", fd); c_reset();
+				ms->last_exit_code_int = 0; 
+			}
+				
+			close(fd);
 		}
-		else
-		{
-			ms->last_exit_int = 0; 
-		}
-			
-		close(fd);
-
-
 		tmp_redir = tmp_redir->next;
 	}
 	
@@ -63,6 +65,21 @@ void	check_infile(t_ms *ms, t_redir *redir)
 
 
 	c_red(); printf("~check_infile() \n");
+}
+int		get_len_cmd(t_cmd *cmd)
+{
+	t_cmd	*tmp_cmd;
+	int		count;
+
+	tmp_cmd = cmd;
+	count = 0;
+	while (tmp_cmd)
+	{
+		tmp_cmd = tmp_cmd->next;
+		count++;
+	}
+	
+	return (count);
 }
 
 void	jexecuter(t_ms *ms)
@@ -76,12 +93,22 @@ void	jexecuter(t_ms *ms)
 
 	tmp_cmd = ms->cmd;
 	
+	// check files
 	while(tmp_cmd)
 	{
 		check_infile(ms, tmp_cmd->redirs);
 		tmp_cmd = tmp_cmd->next;
 	}
+	c_cyan(); printf("Last Exit Code: "); c_reset(); printf("%i \n", ms->last_exit_code_int);
 
+	// Count Commands
+	int command_count = get_len_cmd(ms->cmd);
+	c_cyan(); printf("count: "); c_reset(); printf("%i \n", command_count);
+
+	
+	// need function to get the last infile 
+	
+	// need function to get the last outfile
 	
 	c_red(); printf("~jexecuter() \n");
 }

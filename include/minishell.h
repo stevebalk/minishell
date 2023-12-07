@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:02:49 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 13:24:35 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 17:05:20 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_ms
 	t_list		*envp;
 	t_expand	*exp;
 	char		*last_exit_code;
-	int			last_exit_int;
+	int			last_exit_code_int;
 	char		*unexpected_token;
 }				t_ms;
 

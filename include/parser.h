@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbalk <sbalk@student.fr>                   +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:10:30 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/05 13:18:05 by sbalk            ###   ########.fr       */
+/*   Updated: 2023/12/07 17:08:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 redirections in a linked list*/
 typedef struct s_redir
 {
-	unsigned int	type;
+	unsigned int	type;			// JJJ warum nicht t_token_type ?
 	char			*target;
 	struct s_redir	*next;
 }				t_redir;
