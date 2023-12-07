@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 17:12:51 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 20:04:25 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(int argc, char **argv)
 	init_ms(&ms);
 	ms.last_exit_code = "127";
 
-	char teststring[] = "<infile1.txt <infile2.txt >outfile1.txt wc -l" ;
+	char teststring[] = "<infile2.txt <infile1.txt  wc -l | >outfile1.txt cat" ;
 	lex(teststring, &ms);
 	expand(&ms);
 	parse(&ms);

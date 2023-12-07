@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 17:46:42 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 20:20:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,22 @@ char	*get_last_redir(t_redir *redir, unsigned int type)
 	return (last_redir);
 }
 
+void print_int_array(int **arr)
+{
+	int i;
+	int i2;
+	c_yellow(); printf("print_int_array() \n"); c_reset();
+
+	i = -1;
+	while(i++, arr[i])
+	{
+		i2 = -1;
+		while(i2++, arr[i][i2])
+			printf("arr[%i][%i] == %i\n", i, i2, arr[i][i2]);
+
+	}
+}
+
 void	jexecuter(t_ms *ms)
 {
 	c_yellow(); printf("jexecuter() \n");
@@ -163,10 +179,29 @@ void	jexecuter(t_ms *ms)
 		tmp_cmd = tmp_cmd->next;
 	}
 	
+	printf("size of FD[2]: %i \n", (int)sizeof(int[2]));
+
+	// mallocs FD[2] for the commands
+	int **FD;
+	int i;
+	FD = NULL;
+	i = -1;
+	FD = ft_calloc((command_count + 1), sizeof(int *));
+
+	while(i++, i < command_count)
+	{
+		printf("%i \n", i);
+		FD[i] = ft_calloc(1, sizeof(int[2]));
+	}
 	
+	FD[i + 1] = NULL;
+	FD[0][0] = 11;
+	FD[0][1] = 22;
+	FD[1][0] = 44;
+	FD[1][1] = 55;
+	print_int_array(FD);
 	
-	// need function to get the last outfile
-	
+	//printf("command count: %i      sizeof FD Array: %i \n", command_count, (int)sizeof(FD));
 	c_red(); printf("~jexecuter() \n");
 }
 
