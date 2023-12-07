@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 13:25:19 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 13:27:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	check_infile(t_ms *ms, t_redir *redir)
 		fd = open(tmp_redir->target, O_RDONLY, 0644);
 		if (fd == -1)
 		{
-			c_red(); printf("TODO Error Handling Open file in chec_infile \n");
-			ms->last_exit_int = 127; 			// richtiger Code?
+			c_red(); printf("TODO Error Handling Open file in check_infile \n");
+			ms->last_exit_int = 1; 			// richtiger Code?
 		}
 		else
 		{
