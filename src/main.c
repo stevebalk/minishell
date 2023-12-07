@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbalk <sbalk@student.fr>                   +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/05 19:37:44 by sbalk            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:30:15 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,26 @@ const char *tokenTypeNames[] = {
 
 void prettyPrintCmd(t_cmd *cmd) {
 	while (cmd != NULL) {
-		printf("Command:\n");
+		c_green(); printf("Command:\n");
 		if (cmd->argv != NULL) {
+			c_cyan();
 			printf("  Arguments:\n");
 			char **arg = cmd->argv;
 			while (*arg != NULL) {
+				c_purple();
 				printf("    %s\n", *arg);
 				arg++;
 			}
 		}
 
 		if (cmd->redirs != NULL) {
+			c_yellow();
 			printf("  Redirections:\n");
 			t_redir *redir = cmd->redirs;
 			while (redir != NULL) {
+				c_red();
 				printf("    Type: %s, Filename: %s\n", tokenTypeNames[redir->type], redir->target);
+				c_reset();
 				redir = redir->next;
 			}
 		}
@@ -93,45 +98,47 @@ void prettyPrintCmd(t_cmd *cmd) {
 	}
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	// char	*test_lines[MAX_LINES];
-// 	t_ms	ms;
-
-// 	init_ms(&ms);
-// 	ms.last_exit_code = "127";
-// 	if (argc == 2)
-// 	{
-// 		if (access(argv[1], F_OK) == 0)
-// 			// read_test_file(argv + 1, test_lines);
-// 			printf("OK\n");
-// 		else
-// 		{
-// 			perror("File doesn't exist");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		printf("Wrong input. Use: ./lexer <test_file>\n");
-// 		printf("Testfile should be filled with bash commands\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	char teststring[] = "> dsads << infile | < dsd | fdfs>fdsf | fdsf < fdf fggre >f fd | fdsf" ;
-// 	lex(teststring, &ms);
-// 	expand(&ms);
-// 	parse(&ms);
-// 	prettyPrintCmd(ms.cmd);
-// 	ms_error(&ms, NULL, 0, 0);
-// 	// free(test_lines[0]);
-// }
-
-int main(void)
+int	main(int argc, char **argv)
 {
-    // Example usage
-    printf("%d\n", is_builtin_command("pwd"));  // Should print 1 (true)
-    printf("%d\n", is_builtin_command("ls"));   // Should print 0 (false)
-	heredoc("ho$la$\"$a\"$$\"b\"");
+	(void)argc;
+	(void)argv;
+	// char	*test_lines[MAX_LINES];
+	t_ms	ms;
 
-    return 0;
+	init_ms(&ms);
+	ms.last_exit_code = "127";
+	// if (argc == 2)
+	// {
+	// 	if (access(argv[1], F_OK) == 0)
+	// 		// read_test_file(argv + 1, test_lines);
+	// 		printf("OK\n");
+	// 	else
+	// 	{
+	// 		perror("File doesn't exist");
+	// 		exit(EXIT_FAILURE);
+	// 	}
+	// }
+	// else
+	// {
+	// 	printf("Wrong input. Use: ./lexer <test_file>\n");
+	// 	printf("Testfile should be filled with bash commands\n");
+	// 	exit(EXIT_FAILURE);
+	// }
+	char teststring[] = "> dsads << infile | < dsd | fdfs>fdsf | fdsf < fdf fggre >f fd | fdsf" ;
+	lex(teststring, &ms);
+	expand(&ms);
+	parse(&ms);
+	prettyPrintCmd(ms.cmd);
+	ms_error(&ms, NULL, 0, 0);
+	// free(test_lines[0]);
 }
+
+// int main(void)
+// {
+//     // Example usage
+//     printf("%d\n", is_builtin_command("pwd"));  // Should print 1 (true)
+//     printf("%d\n", is_builtin_command("ls"));   // Should print 0 (false)
+// 	heredoc("ho$la$\"$a\"$$\"b\"");
+
+//     return 0;
+// }
