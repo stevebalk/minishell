@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/07 17:20:23 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/07 17:46:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,47 @@ int		get_len_cmd(t_cmd *cmd)
 	return (count);
 }
 
+char	*get_last_redir(t_redir *redir, unsigned int type)
+{
+	t_redir	*tmp_redir;
+	int		count;
+	char	*last_redir;
+	int		last_type;
+	
+	last_type = -1;
+	last_redir = NULL;
+	tmp_redir = redir;
+	count = 0;
+	while (tmp_redir)
+	{
+		if (tmp_redir->type == type)
+		{
+			last_redir = tmp_redir->target;
+			last_type = tmp_redir->type;
+			count++;
+		}
+		tmp_redir = tmp_redir->next;
+	}
+	printf("---\n");
+	c_yellow(); printf("get_last_redir ");
+	c_blue(); printf("nr: ");
+	
+	c_purple(); printf("%i ", count);
+
+	printf("    type nr: %i   ", last_type);
+	fflush(stdout);
+				
+	c_blue(); printf("type: ");
+	c_purple(); printf("%s ", tokenTypeNames2[last_type]);
+	c_blue(); printf("redir: ");
+	fflush(stdout);
+
+	c_purple(); printf("%s \n", last_redir);
+
+
+	return (last_redir);
+}
+
 void	jexecuter(t_ms *ms)
 {
 	c_yellow(); printf("jexecuter() \n");
@@ -106,7 +147,23 @@ void	jexecuter(t_ms *ms)
 	c_cyan(); printf("count: "); c_reset(); printf("%i \n", command_count);
 
 	
-	// need function to get the last infile 
+	//get the last infile of 
+	tmp_cmd = ms->cmd;
+	while (tmp_cmd)
+	{
+		char *last_infile = get_last_redir(tmp_cmd->redirs, TOKEN_INFILE);
+		char *last_redirect = get_last_redir(tmp_cmd->redirs, TOKEN_REDIRECT);
+		c_blue(); printf("Last Infile: "); 
+		c_purple(); printf("%s\n", last_infile); 
+		
+		c_blue(); printf("Last Redirec: ");
+		c_purple(); printf("%s\n", last_redirect); 
+
+		
+		tmp_cmd = tmp_cmd->next;
+	}
+	
+	
 	
 	// need function to get the last outfile
 	
