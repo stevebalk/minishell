@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbalk <sbalk@student.fr>                   +#+  +:+       +#+         #
+#    By: jonas <jonas@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/20 14:06:14 by sbalk             #+#    #+#              #
-#    Updated: 2023/12/08 17:15:59 by sbalk            ###   ########.fr        #
+#    Updated: 2023/12/08 19:31:31 by jonas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ CFLAGS		= -Werror -Wall -Wextra -g
 RM			= rm
 SRC_DIR		= src/
 OBJ_DIR		= obj/
-INCLUDE		= -I include -I /libs/libft/include -I /libs/readline2/include
-READLINE_DIR = /libs/readline2/lib/
+INCLUDE		= -I include -I /libs/libft/include -I /libs/readline/include
+READLINE_DIR = /libs/readline
 READLINE_NAME = libreadline.a
 
 
