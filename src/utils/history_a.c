@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:10:02 by jopeters          #+#    #+#             */
-/*   Updated: 2023/11/29 13:31:09 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/11 12:35:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ void	history_master(t_list **history_lst)
 }
 
 void	add_history_llst_to_prompt(t_list **history_lst)
-{
+{	
+	c_yellow(); printf("add_history_llst_to_promt()\n");
 	t_list	*tmp_lst;
 
 	tmp_lst = *history_lst;
 	while (tmp_lst)
 	{
+		printf(" >%s< \n", (char *)tmp_lst->content);
 		add_history((char *)tmp_lst->content);
 		tmp_lst = tmp_lst->next;
 	}
