@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:03:32 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/11 14:02:19 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:03:21 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,18 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	t_ms	ms;
 	//char teststring[] = "> outfile.txt << infile.txt  | < dsd | fdfs>fdsf | fdsf < fdf fggre >f fd | fdsf" ;
-	char teststring[] = "> outfile.txt > outX < infile.txt wc -l" ;
+	char teststring[] = "> outfile.txt > outX < inX <infile.txt wc -l" ;
 	lex(teststring, &ms);
+	init_ms(&ms);
 	expand(&ms);
 	parse(&ms);
+	printf("teststring >%s<\n", teststring);
+	ms.extern_env = env;
+	show_env_arr(ms.extern_env);
 	prettyPrintCmd(ms.cmd);
 	jexecuter(&ms);
+	printf("~\n");
+
 	//free_ms(&ms);
 }
 

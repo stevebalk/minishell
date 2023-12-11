@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/11 13:59:38 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:04:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_file(t_ms *ms, t_redir *redir)
 			printf("\t  open IN file >%s< \n", tmp_redir->target);
 			if (fd == -1)
 			{
-				c_red(); printf("\t\tError 1 --> TODO Error Handling Open in file in check_file \nCancel EXECUTION"); c_reset();
+				c_red(); printf("\t\tError 1 --> TODO Error Handling Open in file in check_file \nCancel EXECUTION\n\n"); c_reset();
 				ms->last_exit_code_int = 1; 			// richtiger Code?
 			}
 			else
@@ -64,7 +64,7 @@ void	check_file(t_ms *ms, t_redir *redir)
 			printf("\t  open OUT file >%s< \n", tmp_redir->target);
 			if (fd == -1)
 			{
-				c_red(); printf("\t\tError 1 --> TODO Error Handling Open OUT file in check_file \nCancel EXECUTION"); c_reset();
+				c_red(); printf("\t\tError 1 --> TODO Error Handling Open OUT file in check_file\n"); c_reset();
 				ms->last_exit_code_int = 1; 			// richtiger Code?
 			}
 			else
@@ -186,7 +186,7 @@ void	jexecuter(t_ms *ms)
 
 	// Count Commands
 	int command_count = get_len_cmd(ms->cmd);
-	c_cyan(); printf("count: "); c_reset(); printf("%i \n", command_count);
+	c_cyan(); printf("Command count: "); c_reset(); printf("%i \n", command_count);
 
 	
 	//get the last infile of 
@@ -220,12 +220,62 @@ void	jexecuter(t_ms *ms)
 		FD[i] = ft_calloc(1, sizeof(int[2]));
 	}
 	
-	FD[i + 1] = NULL;
-	FD[0][0] = 11;
-	FD[0][1] = 22;
-	FD[1][0] = 44;
-	FD[1][1] = 55;
+	// FD[i + 1] = NULL;
+	// FD[0][0] = 11;
+	// FD[0][1] = 22;
+	// FD[1][0] = 44;
+	// FD[1][1] = 55;
 	print_int_array(FD);
+
+
+	// from J_pipex   start_pipe
+	int command_i;
+	command_i = 0;
+	pid_t pid;
+	tmp_cmd = ms->cmd;
+	while (command_i < command_count && tmp_cmd)
+	{
+		if (pipe(FD[command_i]) == -1)
+		{
+			c_red(); printf("error PIPE() \n"); c_reset(); 
+		}
+		pid = fork();
+		if (pid == -1)
+		{
+			c_red(); printf("error pid = fork() \n"); c_reset(); 
+		}
+		if (!pid)
+		{
+		//child(var, fds, environment);
+		//		|
+		//		|
+		//		V
+		// child()
+			int		fd;
+			
+			if (tmp_cmd->argv[0] == NULL)
+				return ;
+			if (dup2(FD[command_count][1], STDOUT_FILENO) == -1)
+				printf( "error dup2 (out): child:\n");
+			fd = open(get_last_redir(tmp_cmd->redirs, TOKEN_INFILE), O_RDONLY, 0644);
+			if (fd == -1)
+				printf("error input: %s\n", get_last_redir(tmp_cmd->redirs, TOKEN_INFILE));
+			if (dup2(fd, STDIN_FILENO) == -1)
+			printf("dup2 (in): child: %s \n", get_last_redir(tmp_cmd->redirs, TOKEN_INFILE));
+			close(fd);
+			close(FD[command_i][0]);
+		if (execve(tmp_cmd->argv[0], tmp_cmd->argv, ms->extern_env) == -1)
+		{
+			printf("child: execve\n");
+		}
+
+		}
+		command_i++;
+	}
+	
+
+
+	
 	
 	//printf("command count: %i      sizeof FD Array: %i \n", command_count, (int)sizeof(FD));
 	c_red(); printf("~jexecuter() \n");
