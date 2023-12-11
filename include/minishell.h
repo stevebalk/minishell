@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:02:49 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/11 14:52:36 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:15:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,5 @@ void	copy_env_home_to_ms_struct(t_ms *ms);
 // check_command
 char	*check_program_with_path(t_ms *ms, char *prog_name);
 
-void	jexecuter(t_ms *ms);
+void	jexecuter(t_ms *ms, char **env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/11 15:04:22 by jonas            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:43:58 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void print_int_array(int **arr)
 	}
 }
 
-void	jexecuter(t_ms *ms)
+void	jexecuter(t_ms *ms, char **env)
 {
 	c_yellow(); printf("jexecuter() \n");
 	
@@ -231,20 +231,20 @@ void	jexecuter(t_ms *ms)
 	// from J_pipex   start_pipe
 	int command_i;
 	command_i = 0;
-	pid_t pid;
+	//pid_t pid;
 	tmp_cmd = ms->cmd;
 	while (command_i < command_count && tmp_cmd)
 	{
-		if (pipe(FD[command_i]) == -1)
-		{
-			c_red(); printf("error PIPE() \n"); c_reset(); 
-		}
-		pid = fork();
-		if (pid == -1)
-		{
-			c_red(); printf("error pid = fork() \n"); c_reset(); 
-		}
-		if (!pid)
+		// if (pipe(FD[command_i]) == -1)
+		// {
+		// 	c_red(); printf("error PIPE() \n"); c_reset(); 
+		// }
+		// pid = fork();
+		// if (pid == -1)
+		// {
+		// 	c_red(); printf("error pid = fork() \n"); c_reset(); 
+		// }
+		// if (!pid)
 		{
 		//child(var, fds, environment);
 		//		|
@@ -255,20 +255,30 @@ void	jexecuter(t_ms *ms)
 			
 			if (tmp_cmd->argv[0] == NULL)
 				return ;
-			if (dup2(FD[command_count][1], STDOUT_FILENO) == -1)
+			if (dup2(FD[command_i][1], STDOUT_FILENO) == -1)
 				printf( "error dup2 (out): child:\n");
-			fd = open(get_last_redir(tmp_cmd->redirs, TOKEN_INFILE), O_RDONLY, 0644);
+			char *last_infile_ = get_last_redir(tmp_cmd->redirs, TOKEN_INFILE);
+			printf(">> last INFILE: %s \n", last_infile_);
+			fd = open(last_infile_, O_RDONLY, 0644);
 			if (fd == -1)
-				printf("error input: %s\n", get_last_redir(tmp_cmd->redirs, TOKEN_INFILE));
+				printf("error input: \n");
 			if (dup2(fd, STDIN_FILENO) == -1)
-			printf("dup2 (in): child: %s \n", get_last_redir(tmp_cmd->redirs, TOKEN_INFILE));
+				printf("dup2 (in): child:\n");
 			close(fd);
 			close(FD[command_i][0]);
-		if (execve(tmp_cmd->argv[0], tmp_cmd->argv, ms->extern_env) == -1)
-		{
-			printf("child: execve\n");
-		}
-
+			char *newPath = check_program_with_path(ms, tmp_cmd->argv[0]);
+			printf("newPath >%s< \n", newPath);
+			int exc = execve(newPath, tmp_cmd->argv, env);
+			
+			if (exc == -1)
+			{ 
+				printf("child: execve\n");
+			}
+			else
+			{
+				printf(" exc: %i \n", exc);
+			}
+			printf("end of command: %i \n", command_i);
 		}
 		command_i++;
 	}
