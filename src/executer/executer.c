@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbalk <sbalk@student.fr>                   +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:26:39 by sbalk             #+#    #+#             */
-/*   Updated: 2023/12/08 17:49:16 by sbalk            ###   ########.fr       */
+/*   Updated: 2023/12/11 13:59:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_infile(t_ms *ms, t_redir *redir)
+void	check_file(t_ms *ms, t_redir *redir)
 {
 	char *tokenTypeNames[] = {
 		"WORD",
@@ -24,7 +24,7 @@ void	check_infile(t_ms *ms, t_redir *redir)
 		"VARIABLE",
 		"EOF"
 	};
-	c_yellow(); printf("check_infile() \n");
+	c_yellow(); printf("check_file() \n");
 	t_redir *tmp_redir;
 	int		fd;
 
@@ -39,19 +39,37 @@ void	check_infile(t_ms *ms, t_redir *redir)
 		c_blue();printf("    Type:");c_purple();			printf(" %s", tokenTypeNames[tmp_redir->type]);
 		c_blue();printf(" Filename: ");c_purple();printf("%s\n", tmp_redir->target);c_reset();
 
-		// Check
-		if (tmp_redir->type == TOKEN_REDIRECT || tmp_redir->type ==TOKEN_INFILE)
+		// Check Infile
+		if (tmp_redir->type == TOKEN_INFILE)
 		{
 			fd = open(tmp_redir->target, O_RDONLY, 0644);
-			printf("\t  open file >%s< \n", tmp_redir->target);
+			printf("\t  open IN file >%s< \n", tmp_redir->target);
 			if (fd == -1)
 			{
-				c_red(); printf("\t\tError 1 --> TODO Error Handling Open file in check_infile \n"); c_reset();
+				c_red(); printf("\t\tError 1 --> TODO Error Handling Open in file in check_file \nCancel EXECUTION"); c_reset();
 				ms->last_exit_code_int = 1; 			// richtiger Code?
 			}
 			else
 			{
-				c_green(); printf("\t\tFD: %i   --> TODO Error Handling Open file in check_infile \n", fd); c_reset();
+				c_green(); printf("\t\tFD: %i   --> TODO Error Handling Open in file in check_file \n", fd); c_reset();
+				ms->last_exit_code_int = 0; 
+			}
+				
+			close(fd);
+		}
+		// Check Outfile
+		if (tmp_redir->type == TOKEN_REDIRECT)
+		{
+			fd = open(tmp_redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			printf("\t  open OUT file >%s< \n", tmp_redir->target);
+			if (fd == -1)
+			{
+				c_red(); printf("\t\tError 1 --> TODO Error Handling Open OUT file in check_file \nCancel EXECUTION"); c_reset();
+				ms->last_exit_code_int = 1; 			// richtiger Code?
+			}
+			else
+			{
+				c_green(); printf("\t\tFD: %i   --> TODO Error Handling Open file in check_file \n", fd); c_reset();
 				ms->last_exit_code_int = 0; 
 			}
 				
@@ -63,7 +81,7 @@ void	check_infile(t_ms *ms, t_redir *redir)
 
 
 
-	c_red(); printf("~check_infile() \n");
+	c_red(); printf("~check_file() \n");
 }
 int		get_len_cmd(t_cmd *cmd)
 {
@@ -157,12 +175,11 @@ void	jexecuter(t_ms *ms)
 	if (!ms->cmd)
 		return ;
 
-	tmp_cmd = ms->cmd;
-	
+	tmp_cmd = ms->cmd;		// Command list auf Anfang setzen
 	// check files
 	while(tmp_cmd)
 	{
-		check_infile(ms, tmp_cmd->redirs);
+		check_file(ms, tmp_cmd->redirs);
 		tmp_cmd = tmp_cmd->next;
 	}
 	c_cyan(); printf("Last Exit Code: "); c_reset(); printf("%i \n", ms->last_exit_code_int);
